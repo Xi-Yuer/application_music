@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import { useRoutes } from 'react-router-dom'
+import routes from '@/router/index'
+
 function App() {
-  return <div className="App">App</div>
+  return (
+    <div className="App">
+      <Suspense fallback="loading">{useRoutes(routes)}</Suspense>
+    </div>
+  )
 }
 
 export default App
