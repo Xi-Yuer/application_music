@@ -14,7 +14,7 @@ export const AppHeaderWrapper = styled.div`
   a {
     color:white;
     display:inline-block;
-    padding:0 25px;
+    padding:0 50px;
     color:#cccccc;
     transition:all 0.1s linear;
     &:hover {
@@ -45,5 +45,8 @@ export const AppHeaderWrapper = styled.div`
     background-position: 0 0;
     background: url('https://s2.music.126.net/style/web2/img/frame/topbar.png?9eda0620c135d640f4d5d356b589735e') no-repeat;
     cursor:pointer;
+    &:hover{
+      background-color:transparent;
+    }
   }
 `
