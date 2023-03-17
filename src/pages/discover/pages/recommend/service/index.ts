@@ -23,3 +23,12 @@ export function getNewAlbum<T = any>() {
     }
   })
 }
+
+export function getRanking<T = any>(id: number | string) {
+  return request.get<T>({
+    url: '/playlist/detail',
+    params: {
+      id
+    }
+  })
+}

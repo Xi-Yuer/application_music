@@ -9,7 +9,6 @@ interface IProps {
 }
 
 const SongCoverV2: FC<IProps> = ({ data }) => {
-  console.log(data)
   return (
     <Wrapper>
       <div className="top">

@@ -1,10 +1,9 @@
-import React, { FC, memo, ReactNode, useEffect } from 'react'
+import React, { FC, memo, ReactNode } from 'react'
 import { shallowEqual } from 'react-redux'
 
 import Title from '@/components/title/index'
 import { navData } from './config'
-import { useAppDispatch, useAppSelector } from '@/store'
-import { fetchHotRecommend } from '../../store'
+import { useAppSelector } from '@/store'
 import SongCoverV1 from '@/components/song-cover-v1'
 import { HotSongWrapper } from './style'
 
@@ -13,14 +12,10 @@ interface IProps {
 }
 
 const Hot: FC<IProps> = memo(() => {
-  const dispatch = useAppDispatch()
   const { hotRecommend } = useAppSelector(
     (state) => state.recommend,
     shallowEqual
   )
-  useEffect(() => {
-    dispatch(fetchHotRecommend())
-  }, [])
 
   return (
     <div>

@@ -1,38 +1,55 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getBanner, getHotRecommend, getNewAlbum } from '../service'
-import type { IBanner, IHotRecommend, IInitialState, INewAlbum } from './type'
+import { getBanner, getHotRecommend, getNewAlbum, getRanking } from '../service'
+import type {
+  IBanner,
+  IHotRecommend,
+  IInitialState,
+  INewAlbum,
+  IRanking
+} from './type'
+
+const rangkingIds = [19723756, 3779629, 2884035]
 
 // 异步获取数据
-// 轮播图
-export const fetchBannderDataAction = createAsyncThunk(
-  'banners',
-  async (arg, { dispatch }) => {
-    const result: IBanner = await getBanner<IBanner>()
-    dispatch(changeBannerAction(result.banners))
-  }
-)
-// 热门推荐
-export const fetchHotRecommend = createAsyncThunk(
-  'hotRecommend',
-  async (arg, { dispatch }) => {
-    const { result } = await getHotRecommend<IHotRecommend>()
-    dispatch(changeHotRecommendAction(result))
-  }
-)
+export const fetchDiscoverData = createAsyncThunk(
+  'discover',
+  (_, { dispatch }) => {
+    getBanner<IBanner>().then(({ banners }) => {
+      dispatch(changeBannerAction(banners))
+    })
+    getHotRecommend<IHotRecommend>().then(({ result }) => {
+      dispatch(changeHotRecommendAction(result))
+    })
+    getNewAlbum<INewAlbum>().then(({ albums }) => {
+      dispatch(changeNewAlbumAction(albums))
+    })
 
-// 新碟上架
-export const fetchNewAlbum = createAsyncThunk(
-  'newAlbum',
-  async (arg, { dispatch }) => {
-    const { albums } = await getNewAlbum<INewAlbum>()
-    dispatch(changeNewAlbumAction(albums))
+    // 获取榜单数据
+    for (const id of rangkingIds) {
+      getRanking<IRanking>(id).then(({ playlist }) => {
+        switch (id) {
+          case 19723756:
+            dispatch(changeUpRankingAction(playlist))
+            break
+          case 3779629:
+            dispatch(changeNewRankingAction(playlist))
+            break
+          case 2884035:
+            dispatch(changeOriginRankingAction(playlist))
+            break
+        }
+      })
+    }
   }
 )
 
 const initialState: IInitialState = {
   banners: [],
   hotRecommend: [],
-  newAlbum: []
+  newAlbum: [],
+  upRanking: null,
+  newRanking: null,
+  originRanking: null
 }
 const recommendSlice = createSlice({
   name: 'recommend',
@@ -46,9 +63,25 @@ const recommendSlice = createSlice({
     },
     changeNewAlbumAction(state, { payload }) {
       state.newAlbum = payload
+    },
+    changeUpRankingAction(state, { payload }) {
+      state.upRanking = payload
+    },
+    changeNewRankingAction(state, { payload }) {
+      state.newRanking = payload
+    },
+    changeOriginRankingAction(state, { payload }) {
+      state.originRanking = payload
     }
   }
 })
 
-export const { changeBannerAction, changeHotRecommendAction, changeNewAlbumAction } = recommendSlice.actions
+export const {
+  changeBannerAction,
+  changeHotRecommendAction,
+  changeNewAlbumAction,
+  changeUpRankingAction,
+  changeNewRankingAction,
+  changeOriginRankingAction
+} = recommendSlice.actions
 export default recommendSlice.reducer
