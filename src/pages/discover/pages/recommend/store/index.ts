@@ -1,23 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getBanner } from '../service'
-
-interface Banner {
-  imageUrl: string
-  targetId: number
-  targetType: number
-  titleColor: string
-  typeTitle: string
-}
-interface IBanner {
-  banners: Banner[]
-  code: number
-}
-
-interface IInitialState {
-  banners: Banner[]
-}
+import { getBanner, getHotRecommend, getNewAlbum } from '../service'
+import type { IBanner, IHotRecommend, IInitialState, INewAlbum } from './type'
 
 // 异步获取数据
+// 轮播图
 export const fetchBannderDataAction = createAsyncThunk(
   'banners',
   async (arg, { dispatch }) => {
@@ -25,9 +11,28 @@ export const fetchBannderDataAction = createAsyncThunk(
     dispatch(changeBannerAction(result.banners))
   }
 )
+// 热门推荐
+export const fetchHotRecommend = createAsyncThunk(
+  'hotRecommend',
+  async (arg, { dispatch }) => {
+    const { result } = await getHotRecommend<IHotRecommend>()
+    dispatch(changeHotRecommendAction(result))
+  }
+)
+
+// 新碟上架
+export const fetchNewAlbum = createAsyncThunk(
+  'newAlbum',
+  async (arg, { dispatch }) => {
+    const { albums } = await getNewAlbum<INewAlbum>()
+    dispatch(changeNewAlbumAction(albums))
+  }
+)
 
 const initialState: IInitialState = {
-  banners: []
+  banners: [],
+  hotRecommend: [],
+  newAlbum: []
 }
 const recommendSlice = createSlice({
   name: 'recommend',
@@ -35,9 +40,15 @@ const recommendSlice = createSlice({
   reducers: {
     changeBannerAction(state, { payload }) {
       state.banners = payload
+    },
+    changeHotRecommendAction(state, { payload }) {
+      state.hotRecommend = payload
+    },
+    changeNewAlbumAction(state, { payload }) {
+      state.newAlbum = payload
     }
   }
 })
 
-export const { changeBannerAction } = recommendSlice.actions
+export const { changeBannerAction, changeHotRecommendAction, changeNewAlbumAction } = recommendSlice.actions
 export default recommendSlice.reducer
