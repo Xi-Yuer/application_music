@@ -15,6 +15,15 @@ export function getSongDetail<T>(ids: number) {
   })
 }
 
+export function getSongLyric<T = any>(id: number) {
+  return request.get<T>({
+    url: 'lyric',
+    params: {
+      id
+    }
+  })
+}
+
 export interface IMusicResult {
   data: Datum[]
   code: number

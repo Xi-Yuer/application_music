@@ -1,11 +1,16 @@
-import { useAppSelector } from '@/store'
-import getMusiceResource from '@/utils/getMusicSource'
 import { createRef, useEffect, useState } from 'react'
 import { shallowEqual } from 'react-redux'
 
+import { message } from 'antd';
+
+import { useAppDispatch, useAppSelector } from '@/store'
+import getMusiceResource from '@/utils/getMusicSource'
+import { changeLyricIndexAction } from '../../store';
+
 const AudioRef = createRef<HTMLAudioElement>()
 export function usePlay() {
-  const { currentSong } = useAppSelector((state) => state.player, shallowEqual)
+  const dispatch = useAppDispatch()
+  const { currentSong, lyrics, lyricIndex } = useAppSelector((state) => state.player, shallowEqual)
   const [value, setValue] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [duration, setDuration] = useState(0)
@@ -13,15 +18,26 @@ export function usePlay() {
   const [onChangeing, setOnChangeing] = useState(false)
 
   useEffect(() => {
-    AudioRef.current?.setAttribute('src', '')
     // 获取音乐播放地址
     getMusiceResource(currentSong?.id).then((res) => {
       // 设置音乐总时长
-      setDuration(currentSong?.dt)
+      setDuration(currentSong?.dt || 0)
       AudioRef.current?.setAttribute('src', res)
-      setIsPlaying(true);
     })
   }, [currentSong])
+
+  useEffect(() => {
+    if (isPlaying && lyrics?.[lyricIndex - 1]?.text) {
+      message.open({
+        content: lyrics?.[lyricIndex - 1]?.text,
+        duration: 0,
+        key: 'lyric',
+      });
+    } else {
+      message.destroy('lyric')
+    }
+  }, [lyricIndex, isPlaying])
+
 
   function handlePlayBtnClcik() {
     if (AudioRef.current) {
@@ -34,11 +50,20 @@ export function usePlay() {
   function handleTimeUpdate() {
     const currentTime = AudioRef.current!.currentTime
     const progress = ((currentTime * 1000) / duration) * 100
+    let i = -1
+    for (let index = 0; index < lyrics.length; index++) {
+      if (currentTime < lyrics[index].time / 1000) {
+        i = index
+        break;
+      }
+    }
     if (!onChangeing) {
       setValue(progress)
       setCurrent(currentTime)
       setOnChangeing(false)
     }
+    if (lyricIndex === i || i === -1) return
+    dispatch(changeLyricIndexAction(i))
   }
 
   function handleSilderChange(value: number, x: boolean) {
