@@ -13,17 +13,20 @@ export const initialState: IPlayerState = {
   playSongIndex: -1
 }
 
-export const fetchCurrentSongAction = createAsyncThunk('currentSong', (id: number, { dispatch }) => {
-  // 获取歌曲信息
-  getSongDetail<ISongDeatil>(id).then(res => {
-    dispatch(changeCurrentSong(res.songs[0]))
-  })
-  // 获取歌词信息
-  getSongLyric<ILyric>(id).then(res => {
-    const lyric = res.lrc.lyric
-    dispatch(changeLyricsAction(parseLyric(lyric)))
-  })
-})
+export const fetchCurrentSongAction = createAsyncThunk(
+  'currentSong',
+  (id: number, { dispatch }) => {
+    // 获取歌曲信息
+    getSongDetail<ISongDeatil>(id).then((res) => {
+      dispatch(changeCurrentSong(res.songs[0]))
+    })
+    // 获取歌词信息
+    getSongLyric<ILyric>(id).then((res) => {
+      const lyric = res.lrc.lyric
+      dispatch(changeLyricsAction(parseLyric(lyric)))
+    })
+  }
+)
 
 const playerSlice = createSlice({
   name: 'plaer',
@@ -41,5 +44,6 @@ const playerSlice = createSlice({
   }
 })
 
-export const { changeCurrentSong, changeLyricsAction, changeLyricIndexAction } = playerSlice.actions
+export const { changeCurrentSong, changeLyricsAction, changeLyricIndexAction } =
+  playerSlice.actions
 export default playerSlice.reducer
