@@ -6,6 +6,15 @@ export function getMusicPlayUrl(id: number) {
   })
 }
 
+export function getSongDetail<T>(ids: number) {
+  return request.get<T>({
+    url: '/song/detail',
+    params: {
+      ids
+    }
+  })
+}
+
 export interface IMusicResult {
   data: Datum[]
   code: number

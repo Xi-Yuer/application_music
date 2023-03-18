@@ -4,6 +4,8 @@ import { DoubleRightOutlined, PlayCircleOutlined } from '@ant-design/icons'
 import { formatImg } from '@/utils/format'
 import { Playlist } from '../../../../store/type'
 import { Wrapper } from './style'
+import { useAppDispatch } from '@/store'
+import { fetchCurrentSongAction } from '@/pages/player/store'
 
 interface IProps {
   children?: ReactNode
@@ -11,6 +13,10 @@ interface IProps {
 }
 
 const RangkingItem: FC<IProps> = ({ data }) => {
+  const dispatch = useAppDispatch()
+  const handleItemClick = (id: number) => {
+    dispatch(fetchCurrentSongAction(id))
+  }
   return (
     <Wrapper>
       <div className="header">
@@ -36,7 +42,7 @@ const RangkingItem: FC<IProps> = ({ data }) => {
               >
                 {index + 1}
               </div>
-              <div className="icon">
+              <div className="icon" onClick={() => handleItemClick(item.id)}>
                 <PlayCircleOutlined style={{ color: 'gray' }} />
               </div>
               <div className="name">{item.name}</div>

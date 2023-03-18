@@ -18,7 +18,7 @@ interface IProps {
   children?: ReactNode
 }
 
-const AppPlayerBar: FC<IProps> = memo(() => {
+const AppPlayerBar: FC<IProps> = () => {
   const {
     AudioRef,
     current,
@@ -27,6 +27,7 @@ const AppPlayerBar: FC<IProps> = memo(() => {
     value,
     handleSilderChange,
     isPlaying,
+    setIsPlaying,
     handlePlayBtnClcik,
     handleTimeUpdate
   } = usePlay()
@@ -46,12 +47,12 @@ const AppPlayerBar: FC<IProps> = memo(() => {
         </BarControl>
         <BarPlayInfo>
           <Link to="/player">
-            <img src={formatImg(currentSong?.al.picUrl, 32, 32)} alt="" />
+            <img src={formatImg(currentSong?.al?.picUrl, 32, 32)} alt="" />
           </Link>
           <div className="info">
             <div className="song">
               <div className="song-name">{currentSong?.name}</div>
-              <div className="song-singer">{currentSong?.ar[0]?.name}</div>
+              <div className="song-singer">{currentSong?.ar?.[0]?.name}</div>
             </div>
             <div className="progress">
               <Slider
@@ -75,9 +76,17 @@ const AppPlayerBar: FC<IProps> = memo(() => {
           <ProfileOutlined />
         </BarOperator>
       </div>
-      <audio ref={AudioRef} autoPlay onTimeUpdate={handleTimeUpdate} />
+      <audio
+        ref={AudioRef}
+        autoPlay
+        onTimeUpdate={handleTimeUpdate}
+        onPlaying={() => setIsPlaying(true)}
+        onError={() => setIsPlaying(false)}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => setIsPlaying(false)}
+      />
     </PlayerBarWrapper>
   )
-})
+}
 
-export default AppPlayerBar
+export default memo(AppPlayerBar)

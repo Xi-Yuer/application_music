@@ -3,9 +3,8 @@ import getMusiceResource from '@/utils/getMusicSource'
 import { createRef, useEffect, useState } from 'react'
 import { shallowEqual } from 'react-redux'
 
+const AudioRef = createRef<HTMLAudioElement>()
 export function usePlay() {
-  const AudioRef = createRef<HTMLAudioElement>()
-
   const { currentSong } = useAppSelector((state) => state.player, shallowEqual)
   const [value, setValue] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -14,19 +13,20 @@ export function usePlay() {
   const [onChangeing, setOnChangeing] = useState(false)
 
   useEffect(() => {
+    AudioRef.current?.setAttribute('src', '')
     // 获取音乐播放地址
-    getMusiceResource(currentSong.id).then((res) => {
+    getMusiceResource(currentSong?.id).then((res) => {
       // 设置音乐总时长
-      setDuration(currentSong.dt)
-      if (AudioRef.current) {
-        AudioRef.current.src = res
-      }
+      setDuration(currentSong?.dt)
+      AudioRef.current?.setAttribute('src', res)
+      setIsPlaying(true);
     })
   }, [currentSong])
 
   function handlePlayBtnClcik() {
     if (AudioRef.current) {
-      !isPlaying ? AudioRef.current.play() : AudioRef.current.pause()
+      !isPlaying ? AudioRef.current.play().then(() =>
+        setIsPlaying(true)) : AudioRef.current.pause()
     }
     setIsPlaying(!isPlaying)
   }
@@ -58,6 +58,7 @@ export function usePlay() {
     value,
     setValue,
     isPlaying,
+    setIsPlaying,
     duration,
     handlePlayBtnClcik,
     handleTimeUpdate,
