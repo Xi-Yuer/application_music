@@ -3,7 +3,7 @@ import { useAppSelector } from '@/store'
 import React, { FC, memo, ReactNode } from 'react'
 import { shallowEqual } from 'react-redux'
 import RangkingItem from './components/ranking-item'
-import { ContentWrapper } from './style'
+import { ContentWrapper, Wrapper } from './style'
 
 interface IProps {
   children?: ReactNode
@@ -19,14 +19,14 @@ const Ranking: FC<IProps> = memo(() => {
     shallowEqual
   )
   return (
-    <div>
+    <Wrapper>
       <Title data={navData} />
       <ContentWrapper>
         <RangkingItem data={upRanking} />
         <RangkingItem data={newRanking} />
         <RangkingItem data={originRanking} />
       </ContentWrapper>
-    </div>
+    </Wrapper>
   )
 })
 

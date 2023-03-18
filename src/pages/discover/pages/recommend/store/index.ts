@@ -26,16 +26,16 @@ export const fetchDiscoverData = createAsyncThunk(
 
     // 获取榜单数据
     for (const id of rangkingIds) {
-      getRanking<IRanking>(id).then(({ playlist }) => {
+      getRanking<IRanking>(id).then((res) => {
         switch (id) {
           case 19723756:
-            dispatch(changeUpRankingAction(playlist))
+            dispatch(changeUpRankingAction(res?.playlist))
             break
           case 3779629:
-            dispatch(changeNewRankingAction(playlist))
+            dispatch(changeNewRankingAction(res?.playlist))
             break
           case 2884035:
-            dispatch(changeOriginRankingAction(playlist))
+            dispatch(changeOriginRankingAction(res?.playlist))
             break
         }
       })

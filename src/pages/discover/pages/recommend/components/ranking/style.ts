@@ -1,5 +1,8 @@
 import styled from 'styled-components'
 
+export const Wrapper = styled.div`
+  padding-bottom: 30px;
+`
 export const ContentWrapper = styled.div`
   width: 689px;
   height: 472px;

@@ -11,7 +11,7 @@ export const MainWrapper = styled.main`
   box-sizing: border-box;
   box-sizing: border-box;
   background-color: #ffffff;
-  padding-bottom: 30px;
+  margin-bottom: 80px;
 `
 
 export const LeftWrapper = styled.section`

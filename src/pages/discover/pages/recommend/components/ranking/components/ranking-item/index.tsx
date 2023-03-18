@@ -1,5 +1,5 @@
 import React, { FC, memo, ReactNode } from 'react'
-import { PlayCircleOutlined } from '@ant-design/icons'
+import { DoubleRightOutlined, PlayCircleOutlined } from '@ant-design/icons'
 
 import { formatImg } from '@/utils/format'
 import { Playlist } from '../../../../store/type'
@@ -27,7 +27,7 @@ const RangkingItem: FC<IProps> = ({ data }) => {
         </div>
       </div>
       <div className="list">
-        {data?.tracks.map((item, index) => {
+        {data?.tracks.slice(0, 10).map((item, index) => {
           return (
             <div className="item" key={item.id}>
               <div
@@ -43,6 +43,12 @@ const RangkingItem: FC<IProps> = ({ data }) => {
             </div>
           )
         })}
+      </div>
+      <div className="footer" style={{ textAlign: 'right', cursor: 'pointer' }}>
+        <span>
+          查看更多
+          <DoubleRightOutlined />
+        </span>
       </div>
     </Wrapper>
   )
