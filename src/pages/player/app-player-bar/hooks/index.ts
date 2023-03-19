@@ -14,15 +14,14 @@ import {
 const AudioRef = createRef<HTMLAudioElement>()
 export function usePlay() {
   const dispatch = useAppDispatch()
-  const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(
-    (state) => state.player,
-    shallowEqual
-  )
+  const { currentSong, lyrics, lyricIndex, playMode, playSongList } =
+    useAppSelector((state) => state.player, shallowEqual)
   const [value, setValue] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [duration, setDuration] = useState(0)
   const [current, setCurrent] = useState(0)
   const [onChangeing, setOnChangeing] = useState(false)
+  const [showSongList, setShowSongList] = useState(false)
 
   useEffect(() => {
     // 获取音乐播放地址
@@ -112,8 +111,11 @@ export function usePlay() {
     handleSilderChange,
     handleNext,
     chnagePlayMode,
+    playSongList,
     preSong,
     nextSong,
-    playMode
+    playMode,
+    showSongList,
+    setShowSongList
   }
 }

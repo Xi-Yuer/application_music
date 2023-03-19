@@ -1,3 +1,4 @@
+import OutsideClickHandler from '@/components/outside-click-handler'
 import { formatImg, formatTime } from '@/utils/format'
 import {
   PauseCircleOutlined,
@@ -10,9 +11,10 @@ import {
   StepForwardOutlined,
   SwapOutlined
 } from '@ant-design/icons'
-import { Slider } from 'antd'
+import { Slider, Badge } from 'antd'
 import React, { FC, memo, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import SongList from './components/song-list'
 import { usePlay } from './hooks'
 import { BarControl, BarOperator, BarPlayInfo, PlayerBarWrapper } from './style'
 
@@ -34,9 +36,12 @@ const AppPlayerBar: FC<IProps> = () => {
     handleTimeUpdate,
     handleNext,
     chnagePlayMode,
+    playSongList,
     preSong,
     nextSong,
-    playMode
+    playMode,
+    showSongList,
+    setShowSongList
   } = usePlay()
   return (
     <PlayerBarWrapper>
@@ -84,7 +89,11 @@ const AppPlayerBar: FC<IProps> = () => {
             {playMode === 1 && <RetweetOutlined title="单曲循环" />}
             {playMode === 2 && <RollbackOutlined title="随机播放" />}
           </span>
-          <ProfileOutlined />
+          <span onClick={() => setShowSongList(!showSongList)}>
+            <Badge count={playSongList.length} size="small" color="#242424">
+              <ProfileOutlined />
+            </Badge>
+          </span>
         </BarOperator>
       </div>
       <audio
@@ -96,6 +105,11 @@ const AppPlayerBar: FC<IProps> = () => {
         onPause={() => setIsPlaying(false)}
         onEnded={() => handleNext()}
       />
+      {showSongList && (
+        <OutsideClickHandler onOutsideClick={() => setShowSongList(false)}>
+          <SongList />
+        </OutsideClickHandler>
+      )}
     </PlayerBarWrapper>
   )
 }
