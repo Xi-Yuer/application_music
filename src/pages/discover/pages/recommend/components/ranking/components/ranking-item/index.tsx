@@ -1,11 +1,15 @@
-import React, { FC, memo, ReactNode } from 'react'
+import React, { FC, memo, ReactNode, useState } from 'react'
 import { DoubleRightOutlined, PlayCircleOutlined } from '@ant-design/icons'
 
 import { formatImg } from '@/utils/format'
 import { Playlist } from '../../../../store/type'
 import { Wrapper } from './style'
 import { useAppDispatch } from '@/store'
-import { fetchCurrentSongAction } from '@/pages/player/store'
+import {
+  changePlaySongIndexAction,
+  changePlaySongListAction,
+  fetchCurrentSongAction
+} from '@/pages/player/store'
 
 interface IProps {
   children?: ReactNode
@@ -13,8 +17,15 @@ interface IProps {
 }
 
 const RangkingItem: FC<IProps> = ({ data }) => {
+  const [listTag, setListTag] = useState<number[]>([])
   const dispatch = useAppDispatch()
-  const handleItemClick = (id: number) => {
+  const handleItemClick = (id: number, index: number) => {
+    if (!listTag.includes(data!.id)) {
+      dispatch(changePlaySongListAction(data?.tracks))
+    } else {
+      setListTag([...listTag, data!.id])
+    }
+    dispatch(changePlaySongIndexAction(index))
     dispatch(fetchCurrentSongAction(id))
   }
   return (
@@ -42,7 +53,10 @@ const RangkingItem: FC<IProps> = ({ data }) => {
               >
                 {index + 1}
               </div>
-              <div className="icon" onClick={() => handleItemClick(item.id)}>
+              <div
+                className="icon"
+                onClick={() => handleItemClick(item.id, index)}
+              >
                 <PlayCircleOutlined style={{ color: 'gray' }} />
               </div>
               <div className="name">{item.name}</div>

@@ -157,7 +157,7 @@ export interface Playlist {
   ToplistType: string
 }
 
-interface ITracks {
+export interface ITracks {
   name: string
   id: number
   pst: number

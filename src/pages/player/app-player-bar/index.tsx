@@ -3,10 +3,12 @@ import {
   PauseCircleOutlined,
   PlayCircleOutlined,
   ProfileOutlined,
+  RetweetOutlined,
+  RollbackOutlined,
   SoundOutlined,
   StepBackwardOutlined,
   StepForwardOutlined,
-  SyncOutlined
+  SwapOutlined
 } from '@ant-design/icons'
 import { Slider } from 'antd'
 import React, { FC, memo, ReactNode } from 'react'
@@ -29,19 +31,24 @@ const AppPlayerBar: FC<IProps> = () => {
     isPlaying,
     setIsPlaying,
     handlePlayBtnClcik,
-    handleTimeUpdate
+    handleTimeUpdate,
+    handleNext,
+    chnagePlayMode,
+    preSong,
+    nextSong,
+    playMode
   } = usePlay()
   return (
     <PlayerBarWrapper>
       <div className="content">
         <BarControl>
-          <span>
+          <span onClick={preSong}>
             <StepBackwardOutlined />
           </span>
           <span onClick={() => handlePlayBtnClcik()}>
             {!isPlaying ? <PlayCircleOutlined /> : <PauseCircleOutlined />}
           </span>
-          <span>
+          <span onClick={nextSong}>
             <StepForwardOutlined />
           </span>
         </BarControl>
@@ -72,7 +79,11 @@ const AppPlayerBar: FC<IProps> = () => {
         </BarPlayInfo>
         <BarOperator>
           <SoundOutlined />
-          <SyncOutlined />
+          <span onClick={chnagePlayMode}>
+            {playMode === 0 && <SwapOutlined title="顺序播放" />}
+            {playMode === 1 && <RetweetOutlined title="单曲循环" />}
+            {playMode === 2 && <RollbackOutlined title="随机播放" />}
+          </span>
           <ProfileOutlined />
         </BarOperator>
       </div>
@@ -81,9 +92,9 @@ const AppPlayerBar: FC<IProps> = () => {
         autoPlay
         onTimeUpdate={handleTimeUpdate}
         onPlaying={() => setIsPlaying(true)}
-        onError={() => setIsPlaying(false)}
+        onError={() => handleNext()}
         onPause={() => setIsPlaying(false)}
-        onEnded={() => setIsPlaying(false)}
+        onEnded={() => handleNext()}
       />
     </PlayerBarWrapper>
   )

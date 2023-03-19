@@ -1,3 +1,5 @@
+import { ITracks } from '@/pages/discover/pages/recommend/store/type'
+
 export interface ISongDeatil {
   songs: Song[]
   privileges: Privilege[]
@@ -142,6 +144,9 @@ export interface IPlayerState {
     text: string
   }[]
   lyricIndex: number
-  playSongList: any[]
+  playSongList: ITracks[]
   playSongIndex: number
+  playMode: number
 }
+
+export type changeType = 'pre' | 'next'

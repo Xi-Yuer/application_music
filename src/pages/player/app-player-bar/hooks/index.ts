@@ -5,12 +5,16 @@ import { message } from 'antd'
 
 import { useAppDispatch, useAppSelector } from '@/store'
 import getMusiceResource from '@/utils/getMusicSource'
-import { changeLyricIndexAction } from '../../store'
+import {
+  changeLyricIndexAction,
+  changePlayModeAction,
+  fetchChangeSongAction
+} from '../../store'
 
 const AudioRef = createRef<HTMLAudioElement>()
 export function usePlay() {
   const dispatch = useAppDispatch()
-  const { currentSong, lyrics, lyricIndex } = useAppSelector(
+  const { currentSong, lyrics, lyricIndex, playMode } = useAppSelector(
     (state) => state.player,
     shallowEqual
   )
@@ -79,6 +83,21 @@ export function usePlay() {
     setValue(value)
   }
 
+  function handleNext() {
+    dispatch(fetchChangeSongAction('next'))
+  }
+
+  function preSong() {
+    dispatch(fetchChangeSongAction('pre'))
+  }
+  function nextSong() {
+    dispatch(fetchChangeSongAction('next'))
+  }
+
+  function chnagePlayMode() {
+    dispatch(changePlayModeAction())
+  }
+
   return {
     AudioRef,
     currentSong,
@@ -90,6 +109,11 @@ export function usePlay() {
     duration,
     handlePlayBtnClcik,
     handleTimeUpdate,
-    handleSilderChange
+    handleSilderChange,
+    handleNext,
+    chnagePlayMode,
+    preSong,
+    nextSong,
+    playMode
   }
 }
