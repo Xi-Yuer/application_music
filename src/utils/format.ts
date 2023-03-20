@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export function formatCount(count: number): string | number {
   if (count < 10000) return count
   return Math.floor(count / 10000) + '万'
@@ -44,4 +46,8 @@ export function parseLyric(lyric: string) {
     })
   }
   return lyrics
+}
+
+export function formatDate(s: number) {
+  return dayjs(s).format('MM月DD日')
 }

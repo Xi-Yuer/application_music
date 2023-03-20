@@ -64,7 +64,7 @@ export const LeftWrapper = styled.div`
   position: absolute;
   overflow-y: scroll;
   bottom: 0;
-  width: 565px;
+  width: 540px;
   height: 260px;
   background-color: #242424;
   ${ScrollBar}
@@ -109,7 +109,7 @@ export const RightWrapper = styled.div`
   overflow-y: auto;
   right: 0;
   bottom: 0;
-  width: 420px;
+  width: 425px;
   height: 260px;
   background-color: #2d2a2a;
   ${ScrollBar}
