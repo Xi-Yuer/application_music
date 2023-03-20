@@ -21,7 +21,11 @@ const OutsideClickHandler: FC<IProps> = ({ onOutsideClick, children }) => {
     }
   }, [ref, onOutsideClick])
 
-  return <div ref={ref}>{children}</div>
+  return (
+    <div ref={ref} style={{ height: '100%' }}>
+      {children}
+    </div>
+  )
 }
 
 export default OutsideClickHandler

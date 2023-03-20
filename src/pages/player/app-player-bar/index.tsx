@@ -41,7 +41,12 @@ const AppPlayerBar: FC<IProps> = () => {
     nextSong,
     playMode,
     showSongList,
-    setShowSongList
+    hanleOutSideClick,
+    showVolumeBar,
+    setShowVolumeBar,
+    handleShowSonList,
+    volume,
+    HandleVolumeChange
   } = usePlay()
   return (
     <PlayerBarWrapper>
@@ -83,13 +88,35 @@ const AppPlayerBar: FC<IProps> = () => {
           </div>
         </BarPlayInfo>
         <BarOperator>
-          <SoundOutlined />
+          <span className="volume">
+            {showVolumeBar && (
+              <span className="volume-value">
+                <OutsideClickHandler
+                  onOutsideClick={() => setShowVolumeBar(false)}
+                >
+                  <Slider
+                    vertical
+                    value={volume}
+                    onChange={HandleVolumeChange}
+                  />
+                </OutsideClickHandler>
+              </span>
+            )}
+
+            <span
+              onClick={() => {
+                setShowVolumeBar(!showVolumeBar)
+              }}
+            >
+              <SoundOutlined />
+            </span>
+          </span>
           <span onClick={chnagePlayMode}>
             {playMode === 0 && <SwapOutlined title="顺序播放" />}
             {playMode === 1 && <RetweetOutlined title="单曲循环" />}
             {playMode === 2 && <RollbackOutlined title="随机播放" />}
           </span>
-          <span onClick={() => setShowSongList(!showSongList)}>
+          <span onClick={handleShowSonList}>
             <Badge count={playSongList.length} size="small" color="#242424">
               <ProfileOutlined />
             </Badge>
@@ -106,7 +133,7 @@ const AppPlayerBar: FC<IProps> = () => {
         onEnded={() => handleNext()}
       />
       {showSongList && (
-        <OutsideClickHandler onOutsideClick={() => setShowSongList(false)}>
+        <OutsideClickHandler onOutsideClick={hanleOutSideClick}>
           <SongList />
         </OutsideClickHandler>
       )}

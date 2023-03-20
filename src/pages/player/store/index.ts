@@ -13,7 +13,8 @@ export const initialState: IPlayerState = {
   // 当前播放的歌曲的索引
   playSongIndex: 0,
   // 播放模式（0 循序播放 1单曲循环 2 随机播放）
-  playMode: 0
+  playMode: 0,
+  showLyric: true
 }
 
 // 传入歌曲id播放当前歌曲
@@ -96,6 +97,9 @@ const playerSlice = createSlice({
         playMode++
       }
       state.playMode = playMode
+    },
+    changeShowLyric(state) {
+      state.showLyric = !state.showLyric
     }
   }
 })
@@ -106,6 +110,7 @@ export const {
   changeLyricIndexAction,
   changePlaySongIndexAction,
   changePlaySongListAction,
-  changePlayModeAction
+  changePlayModeAction,
+  changeShowLyric
 } = playerSlice.actions
 export default playerSlice.reducer

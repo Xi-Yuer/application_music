@@ -8,20 +8,23 @@ import getMusiceResource from '@/utils/getMusicSource'
 import {
   changeLyricIndexAction,
   changePlayModeAction,
+  changeShowLyric,
   fetchChangeSongAction
 } from '../../store'
 
 const AudioRef = createRef<HTMLAudioElement>()
 export function usePlay() {
   const dispatch = useAppDispatch()
-  const { currentSong, lyrics, lyricIndex, playMode, playSongList } =
+  const { currentSong, lyrics, lyricIndex, playMode, playSongList, showLyric } =
     useAppSelector((state) => state.player, shallowEqual)
   const [value, setValue] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [duration, setDuration] = useState(0)
   const [current, setCurrent] = useState(0)
+  const [volume, setVolume] = useState(100)
   const [onChangeing, setOnChangeing] = useState(false)
   const [showSongList, setShowSongList] = useState(false)
+  const [showVolumeBar, setShowVolumeBar] = useState(false)
 
   useEffect(() => {
     // 获取音乐播放地址
@@ -33,7 +36,7 @@ export function usePlay() {
   }, [currentSong])
 
   useEffect(() => {
-    if (isPlaying && lyrics?.[lyricIndex - 1]?.text) {
+    if (showLyric && isPlaying && lyrics?.[lyricIndex - 1]?.text) {
       message.open({
         content: lyrics?.[lyricIndex - 1]?.text,
         duration: 0,
@@ -42,7 +45,7 @@ export function usePlay() {
     } else {
       message.destroy('lyric')
     }
-  }, [lyricIndex, isPlaying])
+  }, [showLyric, lyricIndex, isPlaying])
 
   function handlePlayBtnClcik() {
     if (AudioRef.current) {
@@ -96,6 +99,24 @@ export function usePlay() {
   function chnagePlayMode() {
     dispatch(changePlayModeAction())
   }
+  function showVolumeControlBar() {
+    setShowVolumeBar(!showVolumeBar)
+  }
+
+  function HandleVolumeChange(e: number) {
+    setVolume(e)
+    AudioRef.current!.volume = e / 100
+  }
+
+  function handleShowSonList() {
+    setShowSongList(!showSongList)
+    dispatch(changeShowLyric())
+  }
+
+  function hanleOutSideClick() {
+    setShowSongList(false)
+    dispatch(changeShowLyric())
+  }
 
   return {
     AudioRef,
@@ -116,6 +137,13 @@ export function usePlay() {
     nextSong,
     playMode,
     showSongList,
-    setShowSongList
+    setShowSongList,
+    showVolumeControlBar,
+    hanleOutSideClick,
+    showVolumeBar,
+    setShowVolumeBar,
+    handleShowSonList,
+    volume,
+    HandleVolumeChange
   }
 }

@@ -1,6 +1,7 @@
 import { fetchCurrentSongAction } from '@/pages/player/store'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { formatTime } from '@/utils/format'
+import { CaretRightOutlined } from '@ant-design/icons'
 import React, { FC, memo, ReactNode, useEffect, useRef } from 'react'
 import { LeftWrapper, RightWrapper, Title, Wrapper } from './style'
 
@@ -41,7 +42,17 @@ const SongList: FC<IProps> = memo(() => {
               className="song-item"
               key={item.id}
               onClick={() => handleSongItemClick(item.id)}
+              style={
+                item.id === currentSong.id
+                  ? { background: '#0f0f0f' }
+                  : undefined
+              }
             >
+              {item.id === currentSong.id && (
+                <span className="play-icon">
+                  <CaretRightOutlined />
+                </span>
+              )}
               <div className="name">{item.name}</div>
               <div className="right">
                 <div className="singer">{item.ar[0].name}</div>

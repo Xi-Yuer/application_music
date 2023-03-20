@@ -1,4 +1,33 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+const SliderCss = css`
+  .ant-slider {
+    width: 100%;
+    height: 100%;
+  }
+  .ant-slider-rail {
+    background-color: #191919;
+  }
+  .ant-slider-track {
+    background-color: #c70c0c;
+  }
+  .ant-slider-handle::after {
+    box-shadow: none;
+    background-color: red;
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .ant-slider-handle::before {
+    background-color: white !important;
+    border-radius: 50%;
+  }
+  &:hover ::before {
+  }
+`
 
 export const PlayerBarWrapper = styled.div`
   position: fixed;
@@ -7,7 +36,7 @@ export const PlayerBarWrapper = styled.div`
   right: 0;
   bottom: 0;
   height: 52px;
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 100%;
   display: flex;
   align-items: center;
@@ -75,29 +104,7 @@ export const BarPlayInfo = styled.div`
       margin-top: -5px;
       justify-content: space-between;
       align-items: center;
-      .ant-slider {
-        width: 100%;
-      }
-      .ant-slider-rail {
-        background-color: #191919;
-      }
-      .ant-slider-track {
-        background-color: #c70c0c;
-      }
-      .ant-slider-handle::after {
-        box-shadow: none;
-        background-color: red;
-        width: 6px;
-        height: 6px;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .ant-slider-handle::before {
-        background-color: white !important;
-        border-radius: 50%;
-      }
+      ${SliderCss}
       .time {
         display: flex;
         justify-content: space-between;
@@ -129,5 +136,19 @@ export const BarOperator = styled.div`
     color: white;
     margin: 8px;
     cursor: pointer;
+  }
+  .volume {
+    display: inline-block;
+    position: relative;
+    .volume-value {
+      position: absolute;
+      display: inline-block;
+      width: 32px;
+      height: 113px;
+      background-color: #292929;
+      bottom: 40px;
+      padding: 10px 0;
+      ${SliderCss}
+    }
   }
 `

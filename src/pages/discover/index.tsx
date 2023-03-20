@@ -1,3 +1,4 @@
+import { Skeleton } from 'antd'
 import React, { FC, memo, ReactNode, Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 import DiscoverNav from './components/nav'
@@ -10,7 +11,7 @@ const DisCover: FC<IProps> = () => {
   return (
     <div>
       <DiscoverNav />
-      <Suspense fallback="loading">
+      <Suspense fallback={<Skeleton />}>
         <Outlet />
       </Suspense>
     </div>

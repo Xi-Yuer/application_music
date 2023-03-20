@@ -13,7 +13,7 @@ export const Title = styled.div`
   .song-name {
     color: #fff;
     font-size: 14px;
-    width: 420px;
+    width: 380px;
     text-align: center;
     font-weight: bold;
   }
@@ -29,6 +29,12 @@ export const Wrapper = styled.div`
   background-color: #202020;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
+  padding-left: 20px;
+  .play-icon {
+    position: absolute;
+    left: 0px;
+    color: red;
+  }
 `
 const ScrollBar = css`
   scroll-behavior: smooth;

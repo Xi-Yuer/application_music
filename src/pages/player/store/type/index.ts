@@ -147,6 +147,7 @@ export interface IPlayerState {
   playSongList: ITracks[]
   playSongIndex: number
   playMode: number
+  showLyric: boolean
 }
 
 export type changeType = 'pre' | 'next'
