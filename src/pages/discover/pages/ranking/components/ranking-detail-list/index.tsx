@@ -66,16 +66,16 @@ const RankingDetailList: FC<IProps> = memo(() => {
         </div>
         {currentRakingDeatil?.playlist.tracks.map((item, index) => {
           return index <= 2 ? (
-            <div
-              key={item.id}
-              className="table-list"
-              style={style(index)}
-              onClick={() => handleItemClick(item.id)}
-            >
+            <div key={item.id} className="table-list" style={style(index)}>
               <div className="index">{index + 1}</div>
-              <div className="title line-througth">
+              <div className="title">
                 <img src={formatImg(item.al.picUrl, 50, 50)} alt="" />
-                <span>{item.name}</span>
+                <span
+                  onClick={() => handleItemClick(item.id)}
+                  className="line-througth"
+                >
+                  {item.name}
+                </span>
               </div>
               <div className="time">{formatTime(item.dt)}</div>
               <div className="singer">
@@ -89,14 +89,16 @@ const RankingDetailList: FC<IProps> = memo(() => {
               </div>
             </div>
           ) : (
-            <div
-              key={item.id}
-              className="table-list"
-              style={style(index)}
-              onClick={() => handleItemClick(item.id)}
-            >
+            <div key={item.id} className="table-list" style={style(index)}>
               <div className="index">{index + 1}</div>
-              <div className="title line-througth">{item.name}</div>
+              <div className="title">
+                <span
+                  onClick={() => handleItemClick(item.id)}
+                  className="line-througth"
+                >
+                  {item.name}
+                </span>
+              </div>
               <div className="time">{formatTime(item.dt)}</div>
               <div className="singer">
                 {item.ar.map((i) => {

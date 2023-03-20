@@ -2,6 +2,7 @@ import { fetchCurrentSongAction } from '@/pages/player/store'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { formatTime } from '@/utils/format'
 import { CaretRightOutlined } from '@ant-design/icons'
+import { Empty } from 'antd'
 import React, { FC, memo, ReactNode, useEffect, useRef } from 'react'
 import { LeftWrapper, RightWrapper, Title, Wrapper } from './style'
 
@@ -61,6 +62,14 @@ const SongList: FC<IProps> = memo(() => {
             </div>
           )
         })}
+        {playSongList.length === 0 && (
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={
+              <span style={{ color: '#aaaaaa' }}>你还没有添加任何歌曲</span>
+            }
+          />
+        )}
       </LeftWrapper>
       <RightWrapper ref={scrollRef}>
         {lyrics.map((item, index) => {

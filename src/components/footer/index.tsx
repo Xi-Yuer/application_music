@@ -5,7 +5,7 @@ interface IProps {
 }
 
 const Footer: FC<IProps> = memo(() => {
-  return <div></div>
+  return <div style={{ height: '200px' }}></div>
 })
 
 export default Footer

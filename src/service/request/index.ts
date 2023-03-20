@@ -1,6 +1,8 @@
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import { RequestInterceptors, RequestConfig } from './type' //实例的类型/配置的类型
+// import { changeLoadingAction } from '@/store/modules/loading'
+// import store from '@/store/index'
 
 class Request {
   instance: AxiosInstance
@@ -14,6 +16,9 @@ class Request {
     // 所有实例都会有的拦截器
     this.instance.interceptors.response.use(
       (config) => {
+        // if (this.showLoading) {
+        //   store.dispatch(changeLoadingAction(true))
+        // }
         return config
       },
       (err) => {
@@ -43,10 +48,12 @@ class Request {
             res = config.interceptors.responseInterceptor(res)
           }
           this.showLoading = false
+          // store.dispatch(changeLoadingAction(false))
           resolve(res)
         })
         .catch((err) => {
           this.showLoading = false
+          // store.dispatch(changeLoadingAction(false))
           reject(err)
         })
     })
