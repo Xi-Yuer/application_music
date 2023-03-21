@@ -100,6 +100,13 @@ export const LeftWrapper = styled.div`
     font-size: 12px;
     ${Elipse}
   }
+  .empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 export const RightWrapper = styled.div`
   scroll-behavior: smooth;

@@ -1,3 +1,4 @@
+import LazyLoadImg from '@/components/lazy-load-img'
 import OutsideClickHandler from '@/components/outside-click-handler'
 import { formatImg, formatTime } from '@/utils/format'
 import {
@@ -64,7 +65,10 @@ const AppPlayerBar: FC<IProps> = () => {
         </BarControl>
         <BarPlayInfo>
           <Link to="/player">
-            <img src={formatImg(currentSong?.al?.picUrl, 32, 32)} alt="" />
+            <LazyLoadImg
+              src={formatImg(currentSong?.al?.picUrl, 32, 32)}
+              alt=""
+            />
           </Link>
           <div className="info">
             <div className="song">

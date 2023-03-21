@@ -63,12 +63,14 @@ const SongList: FC<IProps> = memo(() => {
           )
         })}
         {playSongList.length === 0 && (
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={
-              <span style={{ color: '#aaaaaa' }}>你还没有添加任何歌曲</span>
-            }
-          />
+          <div className="empty">
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={
+                <span style={{ color: '#aaaaaa' }}>你还没有添加任何歌曲</span>
+              }
+            />
+          </div>
         )}
       </LeftWrapper>
       <RightWrapper ref={scrollRef}>

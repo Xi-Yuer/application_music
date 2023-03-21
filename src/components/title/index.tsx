@@ -1,7 +1,9 @@
 import React, { FC, memo, ReactNode } from 'react'
 import { CrownOutlined, SwapRightOutlined } from '@ant-design/icons'
 import { TitleWrapper } from './style'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '@/store'
+import { changeCurrentCatAction } from '@/pages/discover/pages/songs/store'
 
 interface IProps {
   children?: ReactNode
@@ -15,6 +17,12 @@ interface IProps {
 const Title: FC<IProps> = ({
   data: { title = '', keywords = [], moreLink = '/' }
 }) => {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const handleRouterJump = (item: string) => {
+    dispatch(changeCurrentCatAction(item))
+    navigate('/discover/songs')
+  }
   return (
     <TitleWrapper>
       <div className="left">
@@ -26,7 +34,9 @@ const Title: FC<IProps> = ({
           {keywords.map((item) => {
             return (
               <div className="item" key={item}>
-                <span className="text">{item}</span>
+                <span className="text" onClick={() => handleRouterJump(item)}>
+                  {item}
+                </span>
               </div>
             )
           })}

@@ -1,3 +1,4 @@
+import LazyLoadImg from '@/components/lazy-load-img'
 import OperationBtns from '@/components/operation-btns'
 import SongList from '@/components/song-list'
 import { formatDate, formatImg } from '@/utils/format'
@@ -35,7 +36,7 @@ const PlayList: FC<IProps> = memo(() => {
       <WrapperLeft showMore={showMore}>
         <div className="top">
           <div className="left">
-            <img
+            <LazyLoadImg
               src={formatImg(playListDeatil?.coverImgUrl, 208, 208)}
               alt=""
             />
@@ -44,7 +45,7 @@ const PlayList: FC<IProps> = memo(() => {
             <div className="title">{playListDeatil?.name}</div>
             <div className="creator">
               <div className="creator-avatar">
-                <img
+                <LazyLoadImg
                   src={formatImg(playListDeatil?.creator.avatarUrl, 35, 35)}
                   alt=""
                 />

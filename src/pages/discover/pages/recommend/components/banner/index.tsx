@@ -12,6 +12,7 @@ import {
   BannderWrapper
 } from './style'
 import { CarouselRef } from 'antd/es/carousel'
+import LazyLoadImg from '@/components/lazy-load-img'
 
 interface IProps {
   children?: ReactNode
@@ -29,7 +30,7 @@ const Banner: FC<IProps> = memo(() => {
   }
 
   return (
-    <BannderWrapper bgUrl={banners[index]?.imageUrl}>
+    <BannderWrapper bgUrl={banners?.[index]?.imageUrl}>
       <div className="content">
         <BannderLeft>
           <Carousel
@@ -38,9 +39,9 @@ const Banner: FC<IProps> = memo(() => {
             ref={carouselRef}
             effect="fade"
           >
-            {banners.map((item) => (
+            {banners?.map((item) => (
               <div className="item" key={item.imageUrl}>
-                <img
+                <LazyLoadImg
                   src={item.imageUrl}
                   alt={item.typeTitle}
                   title={item.typeTitle}
@@ -60,7 +61,7 @@ const Banner: FC<IProps> = memo(() => {
           ></div>
         </BannderControl>
         <BannderRight>
-          <img src={require('@/assets/img/download.png')} alt="" />
+          <LazyLoadImg src={require('@/assets/img/download.png')} alt="" />
         </BannderRight>
       </div>
     </BannderWrapper>

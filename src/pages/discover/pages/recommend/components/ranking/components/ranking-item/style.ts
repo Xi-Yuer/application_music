@@ -77,6 +77,9 @@ export const Wrapper = styled.div`
       .name {
         margin-left: 10px;
         font-size: 12px;
+        &:hover {
+          text-decoration: underline;
+        }
       }
       .icon {
         display: none;

@@ -4,22 +4,21 @@ import routes from '@/router/index'
 import Header from './components/header'
 import Footer from './components/footer'
 import AppPlayerBar from './pages/player/app-player-bar'
-import { Skeleton, ConfigProvider, Spin } from 'antd'
+import { Skeleton, ConfigProvider } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
-import { useAppSelector } from './store'
-import { shallowEqual } from 'react-redux'
+import { theme } from './base-ui/theme'
+import AutoTop from './components/auto-top'
 
 function App() {
-  const { isLoading } = useAppSelector((state) => state.loading, shallowEqual)
   return (
     <div className="App">
-      <ConfigProvider locale={zhCN}>
-        <Spin spinning={isLoading} tip="Loading...">
+      <ConfigProvider locale={zhCN} theme={theme}>
+        <AutoTop>
           <Header />
           <Suspense fallback={<Skeleton />}>{useRoutes(routes)}</Suspense>
           <Footer />
-        </Spin>
-        <AppPlayerBar />
+          <AppPlayerBar />
+        </AutoTop>
       </ConfigProvider>
     </div>
   )

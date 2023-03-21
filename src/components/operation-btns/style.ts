@@ -4,10 +4,11 @@ export const Wrapper = styled.div`
   width: 100%;
   .info {
     height: 50px;
+    padding-bottom: 10px;
     .btn {
       padding: 5px 10px;
       border: 1px solid #c4c4c4;
-      margin-right: 10px;
+      margin-right: 5px;
       display: inline-block;
       cursor: pointer;
       background-color: #fafafa;

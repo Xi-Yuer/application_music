@@ -1,3 +1,4 @@
+import LazyLoadImg from '@/components/lazy-load-img'
 import { useAppDispatch } from '@/store'
 import { formatImg } from '@/utils/format'
 import React, { FC, memo, ReactNode } from 'react'
@@ -19,7 +20,7 @@ const RankingItem: FC<IProps> = ({ data, currentRanking }) => {
   return (
     <Wrapper hasCurrent={currentRanking === data.id} onClick={handleItemClick}>
       <div className="left">
-        <img src={formatImg(data.coverImgUrl, 40, 40)} alt="" />
+        <LazyLoadImg src={formatImg(data.coverImgUrl, 40, 40)} alt="" />
       </div>
       <div className="right">
         <span>{data.name}</span>

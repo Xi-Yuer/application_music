@@ -3,6 +3,7 @@ import { Song } from '@/pages/playlist/type'
 import { useAppDispatch } from '@/store'
 import { formatImg, formatTime } from '@/utils/format'
 import React, { CSSProperties, FC, memo, ReactNode } from 'react'
+import LazyLoadImg from '../lazy-load-img'
 import { Wrapper } from './style'
 
 interface IProps {
@@ -70,7 +71,7 @@ const SongList: FC<IProps> = ({
             <div key={item.id} className="table-list" style={style(index)}>
               <div className="index">{index + 1}</div>
               <div className="title">
-                <img src={formatImg(item.al.picUrl, 50, 50)} alt="" />
+                <LazyLoadImg src={formatImg(item.al.picUrl, 50, 50)} alt="" />
                 <span
                   onClick={() => handleItemClick(item.id)}
                   className="line-througth"

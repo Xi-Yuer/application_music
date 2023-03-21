@@ -1,3 +1,4 @@
+import LazyLoadImg from '@/components/lazy-load-img'
 import OperationBtns from '@/components/operation-btns'
 import { changePlaySongListAction } from '@/pages/player/store'
 import { useAppDispatch, useAppSelector } from '@/store'
@@ -24,7 +25,7 @@ const RankingDeatilHeader: FC<IProps> = memo(() => {
   return (
     <Wrappper>
       <div className="left">
-        <img
+        <LazyLoadImg
           src={formatImg(currentRakingDeatil?.playlist.coverImgUrl, 150, 150)}
           alt=""
         />

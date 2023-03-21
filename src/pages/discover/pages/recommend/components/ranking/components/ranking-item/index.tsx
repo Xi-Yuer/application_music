@@ -1,4 +1,5 @@
 import React, { FC, memo, ReactNode, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { DoubleRightOutlined, PlayCircleOutlined } from '@ant-design/icons'
 
 import { formatImg } from '@/utils/format'
@@ -10,6 +11,7 @@ import {
   changePlaySongListAction,
   fetchCurrentSongAction
 } from '@/pages/player/store'
+import { changeCurrentRankingID } from '@/pages/discover/pages/ranking/store'
 
 interface IProps {
   children?: ReactNode
@@ -17,8 +19,9 @@ interface IProps {
 }
 
 const RangkingItem: FC<IProps> = ({ data }) => {
-  const [listTag, setListTag] = useState<number[]>([])
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const [listTag, setListTag] = useState<number[]>([])
   const handleItemClick = (id: number, index: number) => {
     if (!listTag.includes(data!.id)) {
       dispatch(changePlaySongListAction(data?.tracks))
@@ -28,6 +31,10 @@ const RangkingItem: FC<IProps> = ({ data }) => {
     dispatch(changePlaySongIndexAction(index))
     dispatch(fetchCurrentSongAction(id))
   }
+  const HandleRouterJump = () => {
+    navigate('/discover/ranking')
+    dispatch(changeCurrentRankingID(data?.id))
+  }
   return (
     <Wrapper>
       <div className="header">
@@ -36,7 +43,9 @@ const RangkingItem: FC<IProps> = ({ data }) => {
           <div className="cover"></div>
         </div>
         <div className="info">
-          <h3 className="name">{data?.name}</h3>
+          <h3 className="name" onClick={HandleRouterJump}>
+            {data?.name}
+          </h3>
           <div>
             <span className="btn play"></span>
             <span className="btn favor"></span>
@@ -65,7 +74,7 @@ const RangkingItem: FC<IProps> = ({ data }) => {
         })}
       </div>
       <div className="footer" style={{ textAlign: 'right', cursor: 'pointer' }}>
-        <span>
+        <span onClick={HandleRouterJump}>
           查看更多
           <DoubleRightOutlined />
         </span>

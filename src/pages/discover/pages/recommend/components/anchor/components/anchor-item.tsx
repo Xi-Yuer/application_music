@@ -1,4 +1,5 @@
 import { hotRadios } from '@/common/local-data'
+import LazyLoadImg from '@/components/lazy-load-img'
 import { formatImg } from '@/utils/format'
 import React, { FC, memo, ReactNode } from 'react'
 import { Wrapper } from './style'
@@ -12,7 +13,7 @@ const AnchorItem: FC<IProps> = ({ singer }) => {
   return (
     <Wrapper>
       <div className="avatar">
-        <img src={formatImg(singer.picUrl, 40, 40)} alt="" />
+        <LazyLoadImg src={formatImg(singer.picUrl, 40, 40)} alt="" />
       </div>
       <div className="info">
         <span className="name">{singer.name}</span>
