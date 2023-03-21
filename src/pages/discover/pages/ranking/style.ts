@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
 `
 
 export const LeftWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 240px;
   border-right: 1px solid #d3d3d3;
   background-color: #f9f9f9;

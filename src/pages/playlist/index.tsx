@@ -1,10 +1,17 @@
 import LazyLoadImg from '@/components/lazy-load-img'
+import LikeOther from '@/components/like-other'
 import OperationBtns from '@/components/operation-btns'
 import SongList from '@/components/song-list'
+import Subscribers from '@/components/subscribers'
+import { useAppDispatch } from '@/store'
 import { formatDate, formatImg } from '@/utils/format'
 import { Pagination } from 'antd'
 import React, { FC, memo, ReactNode, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import {
+  changePlaySongListAction,
+  fetchCurrentSongAction
+} from '../player/store'
 import { fetchPlayListDetail, fetchPlayListSongs } from './service'
 import { Wrapper, WrapperLeft, WrapperRight } from './style'
 import { IDeatil, IPlayList, Playlist, Song } from './type'
@@ -16,6 +23,7 @@ interface IProps {
 const PlayList: FC<IProps> = memo(() => {
   const { id = '' } = useParams<{ id: string }>()
   const [limit] = useState(10)
+  const dispatch = useAppDispatch()
   const [currentPage, setCurrentPage] = useState(1)
   const [playListDeatil, setPlayListDeatil] = useState<Playlist>()
   const [playListSongs, setPlayListSongs] = useState<Song[]>([])
@@ -30,6 +38,15 @@ const PlayList: FC<IProps> = memo(() => {
       setPlayListSongs(song.songs)
     })
   }, [id, limit, currentPage])
+
+  const handlePlayBtnClick = () => {
+    if (playListSongs.length > 1) {
+      // 加入播放队列
+      dispatch(changePlaySongListAction(playListSongs))
+      // 播放第一首歌曲
+      dispatch(fetchCurrentSongAction(playListSongs[0].id))
+    }
+  }
 
   return (
     <Wrapper>
@@ -59,9 +76,7 @@ const PlayList: FC<IProps> = memo(() => {
             </div>
             <div className="operation">
               <OperationBtns
-                onPlayBtnClick={() => {
-                  11
-                }}
+                onPlayBtnClick={handlePlayBtnClick}
                 data={{
                   subcribe: playListDeatil?.subscribedCount,
                   shared: playListDeatil?.shareCount,
@@ -108,7 +123,10 @@ const PlayList: FC<IProps> = memo(() => {
           />
         </div>
       </WrapperLeft>
-      <WrapperRight></WrapperRight>
+      <WrapperRight>
+        <Subscribers subscribtors={playListDeatil?.subscribers} />
+        <LikeOther likeOtherID={playListDeatil?.id} />
+      </WrapperRight>
     </Wrapper>
   )
 })

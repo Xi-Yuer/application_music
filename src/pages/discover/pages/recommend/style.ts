@@ -4,6 +4,7 @@ export const MainWrapper = styled.main`
   display: flex;
   justify-content: center;
   width: 980px;
+  background-color: white;
   margin: 0 auto;
   border-left: 1px solid #d2d2d2;
   border-right: 1px solid #d2d2d2;

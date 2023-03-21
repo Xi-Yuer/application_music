@@ -29,7 +29,7 @@ export const fetchCurrentSongAction = createAsyncThunk<
   })
   // 获取歌词信息
   getSongLyric<ILyric>(id).then((res) => {
-    const lyric = res.lrc.lyric
+    const lyric = res?.lrc?.lyric
     dispatch(changeLyricsAction(parseLyric(lyric)))
   })
 })

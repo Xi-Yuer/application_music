@@ -4,7 +4,11 @@ export const Wrappper = styled.div`
   display: flex;
   padding-bottom: 50px;
   .left {
+    width: 158px;
+    height: 158px;
     img {
+      width: 158px;
+      height: 158px;
       border: 1px solid #cccccc;
       padding: 3px;
     }

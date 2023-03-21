@@ -1,6 +1,9 @@
 import LazyLoadImg from '@/components/lazy-load-img'
 import OperationBtns from '@/components/operation-btns'
-import { changePlaySongListAction } from '@/pages/player/store'
+import {
+  changePlaySongListAction,
+  fetchCurrentSongAction
+} from '@/pages/player/store'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { formatDate, formatImg } from '@/utils/format'
 import { HistoryOutlined } from '@ant-design/icons'
@@ -20,7 +23,10 @@ const RankingDeatilHeader: FC<IProps> = memo(() => {
   const disptch = useAppDispatch()
 
   const handlePlayClick = () => {
-    disptch(changePlaySongListAction(currentRakingDeatil?.playlist.tracks))
+    if (currentRakingDeatil?.playlist.tracks.length) {
+      disptch(fetchCurrentSongAction(currentRakingDeatil.playlist.tracks[0].id))
+      disptch(changePlaySongListAction(currentRakingDeatil?.playlist.tracks))
+    }
   }
   return (
     <Wrappper>

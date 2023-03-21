@@ -34,6 +34,8 @@ export const WrapperLeft = styled.div<IProps>`
       height: 216px;
       border: 1px solid #d3d3d3;
       img {
+        width: 216px;
+        height: 216px;
         padding: 3px;
       }
     }
@@ -96,6 +98,7 @@ export const WrapperLeft = styled.div<IProps>`
   }
 `
 export const WrapperRight = styled.div`
-  width: 207px;
+  padding: 20px;
+  flex: 1;
   border-left: 1px solid #d3d3d3;
 `

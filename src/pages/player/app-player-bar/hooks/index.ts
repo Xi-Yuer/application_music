@@ -28,11 +28,13 @@ export function usePlay() {
 
   useEffect(() => {
     // 获取音乐播放地址
-    getMusiceResource(currentSong?.id).then((res) => {
-      // 设置音乐总时长
-      setDuration(currentSong?.dt || 0)
-      AudioRef.current?.setAttribute('src', res)
-    })
+    if (currentSong?.id) {
+      getMusiceResource(currentSong?.id).then((res) => {
+        // 设置音乐总时长
+        setDuration(currentSong?.dt || 0)
+        AudioRef.current?.setAttribute('src', res)
+      })
+    }
   }, [currentSong])
 
   useEffect(() => {

@@ -68,7 +68,12 @@ const RangkingItem: FC<IProps> = ({ data }) => {
               >
                 <PlayCircleOutlined style={{ color: 'gray' }} />
               </div>
-              <div className="name">{item.name}</div>
+              <div
+                className="name"
+                onClick={() => handleItemClick(item.id, index)}
+              >
+                {item.name}
+              </div>
             </div>
           )
         })}

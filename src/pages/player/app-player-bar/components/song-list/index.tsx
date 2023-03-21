@@ -37,11 +37,11 @@ const SongList: FC<IProps> = memo(() => {
         <div className="song-name">{currentSong.name}</div>
       </Title>
       <LeftWrapper>
-        {playSongList.map((item) => {
+        {playSongList.map((item, index) => {
           return (
             <div
               className="song-item"
-              key={item.id}
+              key={index}
               onClick={() => handleSongItemClick(item.id)}
               style={
                 item.id === currentSong.id
@@ -78,7 +78,7 @@ const SongList: FC<IProps> = memo(() => {
           return (
             <div
               className="lyric-item"
-              key={item.time}
+              key={index}
               style={
                 index === lyricIndex - 1
                   ? { color: 'red', fontSize: '16px' }

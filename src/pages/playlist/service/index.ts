@@ -23,3 +23,12 @@ export function fetchPlayListSongs<T = any>(
     }
   })
 }
+
+export function fetchLikeOther<T = any>(id: number) {
+  return request.get<T>({
+    url: '/related/playlist',
+    params: {
+      id
+    }
+  })
+}
