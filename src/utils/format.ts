@@ -48,6 +48,7 @@ export function parseLyric(lyric: string) {
   return lyrics
 }
 
-export function formatDate(s: number) {
-  return dayjs(s).format('MM月DD日')
+export function formatDate(s: number, type?: string) {
+  type ? type : 'MM月DD日'
+  return dayjs(s).format(type)
 }

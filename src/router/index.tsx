@@ -14,6 +14,8 @@ const Singer = lazy(() => import('@/pages/discover/pages/singer/index'))
 const Songs = lazy(() => import('@/pages/discover/pages/songs/index'))
 const Album = lazy(() => import('@/pages/discover/pages/album/index'))
 
+const PlayList = lazy(() => import('@/pages/playlist/index'))
+
 const routes: RouteObject[] = [
   // 路由重定向
   {
@@ -48,6 +50,10 @@ const routes: RouteObject[] = [
       {
         path: '/discover/album',
         element: <Album />
+      },
+      {
+        path: '/discover/playlist/:id',
+        element: <PlayList />
       }
     ]
   },

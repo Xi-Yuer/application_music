@@ -1,7 +1,8 @@
+import SongList from '@/components/song-list'
 import { useAppDispatch, useAppSelector } from '@/store'
 import React, { FC, memo, ReactNode, useEffect } from 'react'
+import { shallowEqual } from 'react-redux'
 import RankingDeatilHeader from './components/rangking-detail-header'
-import RankingDetailList from './components/ranking-detail-list'
 import RankingItem from './components/ranking-item'
 import {
   fetchCurrentRankingDetailAction,
@@ -15,9 +16,11 @@ interface IProps {
 
 const Ranking: FC<IProps> = memo(() => {
   const dispatch = useAppDispatch()
-  const { rankingList, currentRankingID = 19723756 } = useAppSelector(
-    (state) => state.ranking
-  )
+  const {
+    rankingList,
+    currentRankingID = 19723756,
+    currentRakingDeatil
+  } = useAppSelector((state) => state.ranking, shallowEqual)
   useEffect(() => {
     dispatch(fetchRankingListAction())
   }, [])
@@ -46,7 +49,10 @@ const Ranking: FC<IProps> = memo(() => {
       </LeftWrapper>
       <RightWrapper>
         <RankingDeatilHeader />
-        <RankingDetailList />
+        <SongList
+          list={currentRakingDeatil?.playlist.tracks}
+          playCount={currentRakingDeatil?.playlist.playCount}
+        />
       </RightWrapper>
     </Wrapper>
   )

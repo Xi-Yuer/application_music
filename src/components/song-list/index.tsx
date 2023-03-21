@@ -1,19 +1,22 @@
 import { fetchCurrentSongAction } from '@/pages/player/store'
-import { useAppDispatch, useAppSelector } from '@/store'
+import { Song } from '@/pages/playlist/type'
+import { useAppDispatch } from '@/store'
 import { formatImg, formatTime } from '@/utils/format'
 import React, { CSSProperties, FC, memo, ReactNode } from 'react'
-import { shallowEqual } from 'react-redux'
 import { Wrapper } from './style'
 
 interface IProps {
   children?: ReactNode
+  playCount?: number
+  list?: Song[]
+  songsCount?: number
 }
 
-const RankingDetailList: FC<IProps> = memo(() => {
-  const { currentRakingDeatil } = useAppSelector(
-    (state) => state.ranking,
-    shallowEqual
-  )
+const SongList: FC<IProps> = ({
+  list,
+  playCount,
+  songsCount = list?.length
+}) => {
   const dispatch = useAppDispatch()
 
   const handleItemClick = (id: number) => {
@@ -47,13 +50,11 @@ const RankingDetailList: FC<IProps> = memo(() => {
       <div className="header">
         <div className="left">
           <span className="title">歌曲列表</span>
-          <span className="count">
-            {currentRakingDeatil?.playlist.tracks.length}首歌
-          </span>
+          <span className="count">{songsCount}首歌</span>
         </div>
         <div className="right">
           <span className="count">播放:</span>
-          <span className="num">{currentRakingDeatil?.playlist.playCount}</span>
+          <span className="num">{playCount}</span>
           <span className="count">次</span>
         </div>
       </div>
@@ -64,7 +65,7 @@ const RankingDetailList: FC<IProps> = memo(() => {
           <div className="time">时长</div>
           <div className="singer">歌手</div>
         </div>
-        {currentRakingDeatil?.playlist.tracks.map((item, index) => {
+        {list?.map((item, index) => {
           return index <= 2 ? (
             <div key={item.id} className="table-list" style={style(index)}>
               <div className="index">{index + 1}</div>
@@ -115,6 +116,6 @@ const RankingDetailList: FC<IProps> = memo(() => {
       </div>
     </Wrapper>
   )
-})
+}
 
-export default RankingDetailList
+export default memo(SongList)

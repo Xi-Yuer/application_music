@@ -1,3 +1,5 @@
+import { Song } from '@/pages/playlist/type'
+
 export interface IRankingList {
   code: number
   list: List[]
@@ -107,7 +109,7 @@ export interface Playlist {
   subscribers: Creator[]
   subscribed: boolean
   creator: Creator
-  tracks: Track[]
+  tracks: Song[]
   videoIds: null
   videos: null
   trackIds: TrackID[]
