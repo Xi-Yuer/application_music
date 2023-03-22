@@ -2,11 +2,11 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   width: 980px;
-  margin:0 auto;
+  margin: 0 auto;
   border: 1px solid #d3d3d3;
   border-width: 0 1px;
-  background-color:white;
-  display:flex;
+  background-color: white;
+  display: flex;
 `
 
 export const WrapperLeft = styled.div`
