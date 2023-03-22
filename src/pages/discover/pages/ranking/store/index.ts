@@ -18,7 +18,9 @@ export const fetchRankingListAction = createAsyncThunk(
   'rangkingList',
   async (arg, { dispatch }) => {
     getRankingList<IRankingList>().then((res) => {
-      dispatch(changeRankingList(res.list))
+      if (res) {
+        dispatch(changeRankingList(res.list))
+      }
     })
   }
 )

@@ -13,6 +13,7 @@ const Ranking = lazy(() => import('@/pages/discover/pages/ranking/index'))
 const Singer = lazy(() => import('@/pages/discover/pages/singer/index'))
 const Songs = lazy(() => import('@/pages/discover/pages/songs/index'))
 const Album = lazy(() => import('@/pages/discover/pages/album/index'))
+const AlbumDetail = lazy(() => import('@/pages/album-detail'))
 
 const PlayList = lazy(() => import('@/pages/playlist/index'))
 
@@ -54,6 +55,10 @@ const routes: RouteObject[] = [
       {
         path: '/discover/playlist/:id',
         element: <PlayList />
+      },
+      {
+        path: '/discover/album/:id',
+        element: <AlbumDetail />
       }
     ]
   },

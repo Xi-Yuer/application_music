@@ -50,12 +50,12 @@ export function usePlay() {
   }, [showLyric, lyricIndex, isPlaying])
 
   function handlePlayBtnClcik() {
-    if (AudioRef.current) {
+    if (AudioRef.current && currentSong.id) {
       !isPlaying
         ? AudioRef.current.play().then(() => setIsPlaying(true))
         : AudioRef.current.pause()
+      setIsPlaying(!isPlaying)
     }
-    setIsPlaying(!isPlaying)
   }
 
   function handleTimeUpdate() {

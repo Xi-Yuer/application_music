@@ -14,14 +14,20 @@ const rangkingIds = [19723756, 3779629, 2884035]
 export const fetchDiscoverData = createAsyncThunk(
   'discover',
   (_, { dispatch }) => {
-    getBanner<IBanner>().then(({ banners }) => {
-      dispatch(changeBannerAction(banners))
+    getBanner<IBanner>().then((res) => {
+      if (res) {
+        dispatch(changeBannerAction(res?.banners))
+      }
     })
-    getHotRecommend<IHotRecommend>().then(({ result }) => {
-      dispatch(changeHotRecommendAction(result))
+    getHotRecommend<IHotRecommend>().then((res) => {
+      if (res) {
+        dispatch(changeHotRecommendAction(res?.result))
+      }
     })
-    getNewAlbum<INewAlbum>().then(({ albums }) => {
-      dispatch(changeNewAlbumAction(albums))
+    getNewAlbum<INewAlbum>().then((res) => {
+      if (res) {
+        dispatch(changeNewAlbumAction(res?.albums))
+      }
     })
 
     // 获取榜单数据
